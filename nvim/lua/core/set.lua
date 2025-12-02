@@ -8,7 +8,6 @@ vim.opt.relativenumber=true
 --Adding scroll buffer
 vim.opt.scrolloff=8
 
-
 --Adding indent settings
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -16,11 +15,11 @@ vim.opt.softtabstop = 2
 vim.opt.expandtab = true 
 vim.opt.list = true
 vim.opt.listchars = {
-	tab = '→ ',
-	space = '.',
-	trail = 'X',
-	eol = '↴'
+  tab = '→ ',
+  space = '.',
+  trail = 'X'
 }
+
 --Different tabs for C files
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "c", "cpp", "make" },
