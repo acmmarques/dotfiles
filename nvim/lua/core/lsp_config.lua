@@ -1,4 +1,5 @@
 vim.lsp.enable('lua_ls')
+vim.lsp.enable('clangd')
 vim.lsp.enable('cssls')
 vim.lsp.enable('ruby_lsp')
 vim.lsp.enable('herb_ls')
