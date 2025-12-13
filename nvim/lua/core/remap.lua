@@ -20,3 +20,5 @@ vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { 
 vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-f>', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', { noremap = true, silent = true })
+-- remaping <C-i> to <C-p> so that I can use <C-i> for harpoon and <C-p> for going forward on list jump
+vim.keymap.set('n', '<C-p>', '<C-i>')
