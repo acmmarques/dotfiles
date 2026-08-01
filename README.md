@@ -1,10 +1,6 @@
-# André's Dotfiles
-
-Welcome to my personal dotfiles repository! This repository contains my configuration files for various tools, shell environments, and editors. It is designed to be easily portable and structured logically by application.
+# acmmarques Dotfiles
 
 ## 📂 Repository Structure
-
-Here is an overview of what is managed in this repository:
 
 * **`ghostty/`** - Configuration for the [Ghostty](https://ghostty.org/) terminal emulator.
 * **`git/`** - Global Git configuration (`gitconfig`) and global ignores (`gitignore`) featuring custom aliases and workflow enhancements.
