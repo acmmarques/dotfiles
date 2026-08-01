@@ -1,0 +1,11 @@
+[theme]
+name = "tokyo-night"
+auto_switch = false
+
+[keys]
+prefix = "ctrl + a"
+split_horizontal = "prefix + /"
+split_vertical = "prefix + \\"
+goto = "prefix+s"
+settings = "prefix+g"
+focus_agent = "prefix+ctrl+1..9"
