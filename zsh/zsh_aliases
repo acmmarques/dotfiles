@@ -1,0 +1,35 @@
+# ════════════════════════════════════════════════════════════════
+# SOURCED ALIASES (~/.aliases)
+# ════════════════════════════════════════════════════════════════
+[[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
+
+# ════════════════════════════════════════════════════════════════
+# CORE ALIASES
+# ════════════════════════════════════════════════════════════════
+alias n='nvim'
+alias lg='lazygit'
+
+# ════════════════════════════════════════════════════════════════
+# PROJECT NAVIGATION
+# ════════════════════════════════════════════════════════════════
+alias clientes="cd ~/code/$GITHUB_USERNAME/clientes"
+alias lewagon="cd ~/code/$GITHUB_USERNAME/lewagon"
+
+# ════════════════════════════════════════════════════════════════
+# DEV TOOLS
+# ════════════════════════════════════════════════════════════════
+alias jupyter='python3 -m jupyter'
+alias ccc='cc -Wall -Werror -Wextra'
+
+# ════════════════════════════════════════════════════════════════
+# 42 SCHOOL
+# ════════════════════════════════════════════════════════════════
+alias francinette=/Users/andremarques/francinette/tester.sh
+alias paco=/Users/andremarques/francinette/tester.sh
+
+# ════════════════════════════════════════════════════════════════
+# SHORTCUTS
+# ════════════════════════════════════════════════════════════════
+alias flot="toggle_flotnote"
+alias grep='grep --color=auto'
+alias ls='ls -G'

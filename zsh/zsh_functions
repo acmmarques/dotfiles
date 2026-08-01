@@ -1,0 +1,87 @@
+# ════════════════════════════════════════════════════════════════
+# NAVIGATION
+# ════════════════════════════════════════════════════════════════
+
+config() {
+  local target_dir
+  target_dir=$(compgen -G "$HOME/.config/$1*" | head -n 1)
+  if [[ -d "$target_dir" ]]; then
+    cd "$target_dir"
+  else
+    echo "No matching directory found for $1"
+  fi
+}
+
+cli() {
+  local target_dir
+  target_dir=$(compgen -G "$HOME/code/$GITHUB_USERNAME/clientes/$1*" | head -n 1)
+  if [[ -d "$target_dir" ]]; then
+    cd "$target_dir"
+  else
+    echo "No matching directory found for $1"
+  fi
+}
+
+# ════════════════════════════════════════════════════════════════
+# TERMINAL
+# ════════════════════════════════════════════════════════════════
+
+cl() {
+  command clear
+  printf "\n"
+}
+
+# ════════════════════════════════════════════════════════════════
+# MACOS
+# ════════════════════════════════════════════════════════════════
+
+toggle_flotnote() {
+  /usr/bin/osascript "$HOME/.flotnote-toggle.scpt"
+}
+
+# ════════════════════════════════════════════════════════════════
+# YOUTUBE DOWNLOADS
+# ════════════════════════════════════════════════════════════════
+
+cada-esquina() {
+    yt-dlp -f 'bestaudio[ext=m4a]' -o "$HOME/Downloads/%(title)s.%(ext)s" "$1"
+}
+
+yt-search() {
+    local query="$1"
+    if ! command -v yt-dlp &> /dev/null; then
+        echo "Error: yt-dlp is not installed." >&2
+        echo "Install with: brew install yt-dlp" >&2
+        return 1
+    fi
+    if [ -z "$query" ]; then
+        echo "Usage: yt_search \"search string\"" >&2
+        return 1
+    fi
+    local url
+    url=$(yt-dlp --print webpage_url --flat-playlist --no-warnings "ytsearch1:${query}")
+    if [ -n "$url" ]; then
+        echo "$url"
+    else
+        echo "No results found for: $query" >&2
+        return 1
+    fi
+}
+
+ce-download() {
+    local query="$1"
+    if [ -z "$query" ]; then
+        echo "Usage: ce-download \"search query\"" >&2
+        return 1
+    fi
+    echo "Searching for: '$query'..."
+    local url
+    url=$(yt-search "$query")
+    if [ -z "$url" ]; then
+        echo "Aborting: No video found." >&2
+        return 1
+    fi
+    echo "Found: $url"
+    echo "Starting download..."
+    cada-esquina "$url"
+}
