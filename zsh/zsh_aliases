@@ -8,6 +8,8 @@
 # ════════════════════════════════════════════════════════════════
 alias n='nvim'
 alias lg='lazygit'
+alias oc='opencode'
+alias git difftool='git difftool -y --tool=nvimdiff'
 
 # ════════════════════════════════════════════════════════════════
 # DEV TOOLS
@@ -27,4 +29,4 @@ alias paco=/Users/andremarques/francinette/tester.sh
 alias flot="toggle_flotnote"
 alias grep='grep --color=auto'
 alias ls='ls -G'
-alias oc='opencode'
+

@@ -2,6 +2,7 @@
 
 ## 📂 Repository Structure
 
+* **`flotnote/`** - Flotnote floating-note toggle: the AppleScript source (`flotnote-toggle.applescript`) and its guide (`flotnote-toggle-guide.md`).
 * **`ghostty/`** - Configuration for the [Ghostty](https://ghostty.org/) terminal emulator.
 * **`git/`** - Global Git configuration (`gitconfig`) and global ignores (`gitignore`) featuring custom aliases and workflow enhancements.
 * **`herdr/`** - Configuration for [herdr](https://herdr.dev/), a terminal workspace manager for AI coding agents.
@@ -43,6 +44,11 @@ mkdir -p ~/.config/herdr ~/.config/karabiner ~/.config/ghostty
 ln -sf ~/code/dotfiles/herdr/config.toml ~/.config/herdr/config.toml
 ln -sf ~/code/dotfiles/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 ln -sf ~/code/dotfiles/ghostty/config ~/.config/ghostty/config
+
+# Flotnote Toggle
+ln -sf ~/code/dotfiles/flotnote/flotnote-toggle.applescript ~/.flotnote-toggle.applescript
+ln -sf ~/code/dotfiles/flotnote/flotnote-toggle-guide.md ~/flotnote-toggle-guide.md
+osacompile -o ~/.flotnote-toggle.scpt ~/.flotnote-toggle.applescript
 
 # Neovim (Assuming the whole nvim folder is linked)
 ln -sfn ~/code/dotfiles/nvim ~/.config/nvim
