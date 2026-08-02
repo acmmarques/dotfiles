@@ -1,28 +1,4 @@
 # ════════════════════════════════════════════════════════════════
-# NAVIGATION
-# ════════════════════════════════════════════════════════════════
-
-config() {
-  local target_dir
-  target_dir=$(compgen -G "$HOME/.config/$1*" | head -n 1)
-  if [[ -d "$target_dir" ]]; then
-    cd "$target_dir"
-  else
-    echo "No matching directory found for $1"
-  fi
-}
-
-cli() {
-  local target_dir
-  target_dir=$(compgen -G "$HOME/code/$GITHUB_USERNAME/clientes/$1*" | head -n 1)
-  if [[ -d "$target_dir" ]]; then
-    cd "$target_dir"
-  else
-    echo "No matching directory found for $1"
-  fi
-}
-
-# ════════════════════════════════════════════════════════════════
 # TERMINAL
 # ════════════════════════════════════════════════════════════════
 

@@ -34,7 +34,7 @@ export EDITOR=code
 export PYTHONBREAKPOINT=ipdb.set_trace
 
 export GITHUB_USERNAME='acmmarques'
-export USER='andcardo'
+export USER='andremarques'
 export MAIL='andcardo@student.42lisboa.com'
 
 # Colored output
