@@ -1,6 +1,13 @@
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('clangd')
 vim.lsp.enable('cssls')
+vim.lsp.config.ruby_lsp = vim.tbl_deep_extend('keep', vim.lsp.config.ruby_lsp or {}, {
+  init_options = {
+    enabledFeatures = {
+      diagnostics = false,
+    },
+  },
+})
 vim.lsp.enable('ruby_lsp')
 vim.lsp.enable('herb_ls')
 vim.lsp.enable('html')
