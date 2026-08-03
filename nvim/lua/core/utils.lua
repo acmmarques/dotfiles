@@ -38,4 +38,4 @@ function prompt_and_notify_command()
 end
 
 -- Set up a key mapping to call prompt_and_notify_command
-vim.api.nvim_set_keymap('n', '<leader>sc', [[<cmd>lua prompt_and_notify_command()<CR>]], { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>s', prompt_and_notify_command, { noremap = true, silent = true, desc = 'Shell: Run command and notify' })

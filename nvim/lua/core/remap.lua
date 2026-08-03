@@ -1,24 +1,31 @@
 --Mapping the leader and the exiting the file command
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+-- Moving blocks of text with 'J' and 'K'
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
---Moving blocks of text with 'J' and 'K'
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+-- TODO-related mappings are handled by the todo-comments plugin (see plugins/todo-comments.lua)
 
---Commands to manage terminal interactions
-vim.keymap.set("n", "<leader>t", '<cmd>:terminal<cr>')
-vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
+-- LSP related commands
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP: Go to Definition" })
+vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { noremap = true, silent = true, desc = 'LSP: Go to Declaration' })
+vim.keymap.set('n', 'gr', vim.lsp.buf.references, { noremap = true, silent = true, desc = 'LSP: References' })
+vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, { noremap = true, silent = true, desc = 'LSP: Implementation' })
+vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, { desc = 'LSP: Type Definition' })
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'LSP: Hover' })
 
---lsp related commands
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP: Go to definition" })
-vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, { desc = "LSP: Type Definition" })
-vim.api.nvim_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-f>', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', { noremap = true, silent = true })
--- remaping <C-i> to <C-p> so that I can use <C-i> for harpoon and <C-p> for going forward on list jump
-vim.keymap.set('n', '<C-p>', '<C-i>')
+-- Editing / LSP utilities under <leader>c
+vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { noremap = true, silent = true, desc = 'LSP: Rename' })
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { noremap = true, silent = true, desc = 'LSP: Code Action' })
+
+-- Formatting: conform.nvim maps <leader>cf
+
+-- Diagnostics
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { noremap = true, silent = true, desc = 'Diagnostics: Previous' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { noremap = true, silent = true, desc = 'Diagnostics: Next' })
+vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float, { noremap = true, silent = true, desc = 'Diagnostics: Line diagnostics' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { noremap = true, silent = true, desc = 'Diagnostics: Populate loclist' })
+vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { noremap = true, silent = true, desc = 'LSP: Signature help' })
+
+-- remapping <C-i> to <C-p> so that I can use <C-i> for harpoon and <C-p> for going forward on list jump
+vim.keymap.set('n', '<C-p>', '<C-i>', { desc = 'Jumplist: Forward' })

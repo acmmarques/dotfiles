@@ -34,5 +34,6 @@ require("lazy").setup({
   checker = { enabled = true },
 })
 
--- Set keymap for Lazy using vim.keymap.set
-vim.keymap.set('n', '<leader>la', '<cmd>Lazy<CR>', { noremap = true, silent = true })
+-- Set keymaps for Lazy using vim.keymap.set
+vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<CR>', { noremap = true, silent = true, desc = 'Lazy: Open manager' })
+vim.keymap.set('n', '<leader>ls', '<cmd>Lazy sync<CR>', { noremap = true, silent = true, desc = 'Lazy: Sync plugins' })

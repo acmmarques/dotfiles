@@ -5,7 +5,7 @@ return {
   },
   keys = {
     {
-      "<leader>dt",
+      "<leader>gd",
       function()
         local view = require("diffview.lib").get_current_view()
         if view then
