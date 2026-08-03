@@ -11,5 +11,61 @@ goto = "prefix+s"
 settings = "prefix+g"
 focus_agent = "prefix+ctrl+1..9"
 
+# Create/rename now routes through the glyph wizard (see [[keys.command]]).
+# Unset the native actions so the wizard takes their key bindings.
+new_tab = ""
+rename_tab = ""
+new_workspace = ""
+rename_workspace = ""
+rename_pane = ""
+
 [ui]
 agent_panel_sort = "spaces"
+
+[[keys.command]]
+key = "prefix+c"
+type = "popup"
+width = "80%"
+height = "80%"
+command = "$HOME/code/dotfiles/zsh/nerdfont/wizard.sh create-tab"
+description = "new tab (glyph)"
+
+[[keys.command]]
+key = "prefix+shift+t"
+type = "popup"
+width = "80%"
+height = "80%"
+command = "$HOME/code/dotfiles/zsh/nerdfont/wizard.sh rename-tab"
+description = "rename tab (glyph)"
+
+[[keys.command]]
+key = "prefix+shift+n"
+type = "popup"
+width = "80%"
+height = "80%"
+command = "$HOME/code/dotfiles/zsh/nerdfont/wizard.sh create-workspace"
+description = "new workspace (glyph)"
+
+[[keys.command]]
+key = "prefix+shift+w"
+type = "popup"
+width = "80%"
+height = "80%"
+command = "$HOME/code/dotfiles/zsh/nerdfont/wizard.sh rename-workspace"
+description = "rename workspace (glyph)"
+
+[[keys.command]]
+key = "prefix+shift+p"
+type = "popup"
+width = "80%"
+height = "80%"
+command = "$HOME/code/dotfiles/zsh/nerdfont/wizard.sh rename-pane"
+description = "rename pane (glyph)"
+
+[[keys.command]]
+key = "ctrl+g"
+type = "popup"
+width = "80%"
+height = "80%"
+command = "$HOME/code/dotfiles/zsh/nerdfont/pick.sh"
+description = "insert nerd font glyph into prompt"
