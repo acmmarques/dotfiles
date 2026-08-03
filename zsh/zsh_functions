@@ -99,3 +99,55 @@ ce-download() {
     echo "Starting download..."
     cada-esquina "$url"
 }
+
+# nf - fuzzy-search Nerd Font glyphs, copy the selected glyph to the clipboard.
+# Search behavior is shared with herdr pickers via nerdfont/zf.sh:
+# - display strips icon-set prefixes (fa-/cod-/md-...)
+# - ctrl+f toggles favorites (favorites pinned at top)
+# - keywords include upstream synonyms and curated topic tags
+nf() {
+    local picker="${HOME}/code/dotfiles/zsh/nerdfont/zf.sh"
+    if [[ ! -x "$picker" ]]; then
+        echo "nf: missing $picker (is nerdfont setup complete?)" >&2
+        return 1
+    fi
+    local sel
+    sel=$("$picker" "$*") || return
+    [[ -n "$sel" ]] || return
+    local glyph="${sel%%$'\t'*}"
+    printf '%s' "$glyph" | pbcopy
+    printf 'copied %s  (%s)\n' "$glyph" "${${(s:	:)sel}[2]}"
+}
+
+# nf-name - Alt+Enter: apply the current prompt line as a herdr container name.
+# Compose "<glyph> <name>" in the prompt (glyph via prefix+f in herdr), then
+# Alt+Enter to rename the tab/workspace/pane to that line. Reads $BUFFER so the
+# line is consumed as a name, never executed. herdr injects the HERDR_*_ID vars
+# into its pane processes.
+nf-name() {
+    [[ -n "$BUFFER" ]] || return
+    command -v herdr >/dev/null 2>&1 || { print -u2 "nf-name: herdr not found"; return 1; }
+    if [[ -z "$HERDR_TAB_ID$HERDR_WORKSPACE_ID$HERDR_PANE_ID" ]]; then
+        print -u2 "nf-name: not inside herdr (no HERDR_* ids)"
+        return 1
+    fi
+    local name="$BUFFER" tgt res
+    tgt=$(printf 'tab\nworkspace\npane\n' | fzf --prompt='rename: ' \
+          --layout=reverse --height=8 --no-hscroll) || return
+    case "$tgt" in
+        tab)       res=$(herdr tab rename       "$HERDR_TAB_ID"       "$name" 2>&1) ;;
+        workspace) res=$(herdr workspace rename "$HERDR_WORKSPACE_ID" "$name" 2>&1) ;;
+        pane)      res=$(herdr pane rename      "$HERDR_PANE_ID"      "$name" 2>&1) ;;
+        *)         return ;;
+    esac
+    if [[ $? -eq 0 ]]; then
+        BUFFER=''
+        CURSOR=0
+        print -u2 "renamed $tgt: $name"
+    else
+        print -u2 "nf-name: rename failed: $res"
+    fi
+    zle reset-prompt
+}
+zle -N nf-name
+bindkey '^[^M' nf-name   # Alt+Enter (ESC CR)
