@@ -15,6 +15,44 @@ toggle_flotnote() {
   /usr/bin/osascript "$HOME/.flotnote-toggle.scpt"
 }
 
+# Swap the active Karabiner-Elements profile between the internal Apple
+# ISO keyboard and the external Logitech ANSI one. The profile names must
+# match those defined in karabiner/karabiner.json.
+toggle-kb() {
+  local cli="/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"
+
+  if [[ ! -x "$cli" ]]; then
+    echo "Error: karabiner_cli not found. Is Karabiner-Elements installed?" >&2
+    return 1
+  fi
+
+  if [[ "$("$cli" --show-current-profile-name)" == "Logitech-ANSI" ]]; then
+    "$cli" --select-profile "Internal-ISO"
+    echo "Switched virtual keyboard to ISO (Apple!)"
+  else
+    "$cli" --select-profile "Logitech-ANSI"
+    echo "Switched virtual keyboard to ANSI (Logitech!)"
+  fi
+}
+
+# Karabiner-Elements rewrites karabiner.json by atomic replace, which
+# destroys the symlink into this repo. Run this after changing settings
+# in the GUI to pull the live config back in and restore the link.
+kb-sync() {
+  local live="$HOME/.config/karabiner/karabiner.json"
+  local repo="$HOME/code/dotfiles/karabiner/karabiner.json"
+
+  if [[ -L "$live" ]]; then
+    echo "Symlink intact, nothing to sync."
+    return 0
+  fi
+
+  [[ -f "$live" ]] || { echo "No live karabiner.json found." >&2; return 1; }
+
+  cp "$live" "$repo" && rm -f "$live" && ln -s "$repo" "$live" \
+    && echo "Pulled live config into the repo and restored the symlink."
+}
+
 # ════════════════════════════════════════════════════════════════
 # YOUTUBE DOWNLOADS
 # ════════════════════════════════════════════════════════════════

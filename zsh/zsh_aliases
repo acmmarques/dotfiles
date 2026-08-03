@@ -1,15 +1,13 @@
 # ════════════════════════════════════════════════════════════════
-# SOURCED ALIASES (~/.aliases)
-# ════════════════════════════════════════════════════════════════
-[[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
-
-# ════════════════════════════════════════════════════════════════
-# CORE ALIASES
+# CORE
 # ════════════════════════════════════════════════════════════════
 alias n='nvim'
 alias lg='lazygit'
 alias oc='opencode'
-alias git difftool='git difftool -y --tool=nvimdiff'
+
+# zsh cannot alias a two-word command, so `alias git difftool=...`
+# never fires. Use an explicit alias instead.
+alias gdt='git difftool -y --tool=nvimdiff'
 
 # ════════════════════════════════════════════════════════════════
 # DEV TOOLS
@@ -18,15 +16,8 @@ alias jupyter='python3 -m jupyter'
 alias ccc='cc -Wall -Werror -Wextra'
 
 # ════════════════════════════════════════════════════════════════
-# 42 SCHOOL
-# ════════════════════════════════════════════════════════════════
-alias francinette=/Users/andremarques/francinette/tester.sh
-alias paco=/Users/andremarques/francinette/tester.sh
-
-# ════════════════════════════════════════════════════════════════
 # SHORTCUTS
 # ════════════════════════════════════════════════════════════════
-alias flot="toggle_flotnote"
+alias flot='toggle_flotnote'
 alias grep='grep --color=auto'
 alias ls='ls -G'
-

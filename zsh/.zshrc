@@ -1,6 +1,8 @@
 # ════════════════════════════════════════════════════════════════
 # 1. POWERLEVEL10K INSTANT PROMPT
 # ════════════════════════════════════════════════════════════════
+# Must stay near the top. Anything that may require console input
+# (password prompts, [y/n] confirmations) has to go above this block.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -8,17 +10,29 @@ fi
 # ════════════════════════════════════════════════════════════════
 # 2. OH-MY-ZSH
 # ════════════════════════════════════════════════════════════════
-ZSH=$HOME/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-plugins=(git gitfast last-working-dir common-aliases zsh-autosuggestions zsh-syntax-highlighting history-substring-search)
+plugins=(
+  git
+  gitfast
+  last-working-dir
+  common-aliases
+  history-substring-search
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
 
 ZSH_DISABLE_COMPFIX=true
 
-source "${ZSH}/oh-my-zsh.sh"
-
-unalias rm
-unalias lt
+if [[ -r "${ZSH}/oh-my-zsh.sh" ]]; then
+  source "${ZSH}/oh-my-zsh.sh"
+  # common-aliases ships aliases that get in the way; drop them if present.
+  unalias rm 2>/dev/null
+  unalias lt 2>/dev/null
+else
+  print -u2 "warning: oh-my-zsh not found at ${ZSH}; running without it"
+fi
 
 # ════════════════════════════════════════════════════════════════
 # 3. ENVIRONMENT VARIABLES
@@ -28,14 +42,8 @@ export HOMEBREW_NO_ANALYTICS=1
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-export BUNDLER_EDITOR=code
-export EDITOR=code
-
-export PYTHONBREAKPOINT=ipdb.set_trace
-
-export GITHUB_USERNAME='acmmarques'
-export USER='andremarques'
-export MAIL='andcardo@student.42lisboa.com'
+export EDITOR=nvim
+export VISUAL=nvim
 
 # Colored output
 export CLICOLOR=1
@@ -45,53 +53,17 @@ export LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=
 # ════════════════════════════════════════════════════════════════
 # 4. PATH
 # ════════════════════════════════════════════════════════════════
-export PATH="${HOME}/.rbenv/bin:${PATH}"
-
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-
-export NVM_DIR="$HOME/.nvm"
-
-export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
-
-export PATH="./bin:./node_modules/.bin:${PATH}:/usr/local/sbin"
-export PATH="/usr/local/bin:${PATH}"
-
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-export PATH=$PATH:$(go env GOPATH)/bin
-export PATH=$PATH:"${HOME}/.local/bin/"
+# Note: relative entries such as ./bin or ./node_modules/.bin are
+# deliberately NOT on PATH -- they let any directory you cd into
+# hijack the commands you run.
+export PATH="/usr/local/bin:${PATH}:/usr/local/sbin"
+export PATH="${PATH}:${HOME}/.local/bin"
+export PATH="${HOME}/.opencode/bin:${PATH}"
 
 # ════════════════════════════════════════════════════════════════
 # 5. TOOL INITIALIZERS
 # ════════════════════════════════════════════════════════════════
-type -a rbenv > /dev/null && eval "$(rbenv init -)"
-
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-autoload -U add-zsh-hook
-load-nvmrc() {
-  if nvm -v &> /dev/null; then
-    local node_version="$(nvm version)"
-    local nvmrc_path="$(nvm_find_nvmrc)"
-    if [ -n "$nvmrc_path" ]; then
-      local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-      if [ "$nvmrc_node_version" = "N/A" ]; then
-        nvm install
-      elif [ "$nvmrc_node_version" != "$node_version" ]; then
-        nvm use --silent
-      fi
-    elif [ "$node_version" != "$(nvm version default)" ]; then
-      nvm use default --silent
-    fi
-  fi
-}
-type -a nvm > /dev/null && add-zsh-hook chpwd load-nvmrc
-type -a nvm > /dev/null && load-nvmrc
-
-eval "$(zoxide init zsh)"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
 # ════════════════════════════════════════════════════════════════
 # 6. ALIASES
@@ -106,26 +78,14 @@ source "${HOME}/code/dotfiles/zsh/zsh_functions"
 # ════════════════════════════════════════════════════════════════
 # 8. TERMINAL MULTIPLEXER (herdr)
 # ════════════════════════════════════════════════════════════════
-# herdr auto-start is disabled — run `herdr` manually to launch the
-# workspace manager. The herdr server already runs as a background
-# daemon, so `herdr` attaches instantly when you need it.
+# No auto-start: run `herdr` manually to attach the workspace manager.
+# Auto-attaching from .zshrc causes nesting and hangs.
+if command -v herdr >/dev/null; then
+  source <(herdr completion zsh) 2>/dev/null
+fi
 
 # ════════════════════════════════════════════════════════════════
 # 9. PROMPT
 # ════════════════════════════════════════════════════════════════
 PROMPT=$'\n'$PROMPT
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# ════════════════════════════════════════════════════════════════
-# 10. COMPLETIONS
-# ════════════════════════════════════════════════════════════════
-[ -s "/Users/andremarques/.bun/_bun" ] && source "/Users/andremarques/.bun/_bun"
-source <(herdr completion zsh) 2>/dev/null
-
-# ════════════════════════════════════════════════════════════════
-# 11. BACKGROUND SERVICES
-# ════════════════════════════════════════════════════════════════
-if ! pgrep "lemonade" > /dev/null; then
-  lemonade server > /dev/null 2>&1 &
-  disown
-fi

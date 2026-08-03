@@ -4,70 +4,95 @@
 
 * **`flotnote/`** - Flotnote floating-note toggle: the AppleScript source (`flotnote-toggle.applescript`) and its guide (`flotnote-toggle-guide.md`).
 * **`ghostty/`** - Configuration for the [Ghostty](https://ghostty.org/) terminal emulator.
-* **`git/`** - Global Git configuration (`gitconfig`) and global ignores (`gitignore`) featuring custom aliases and workflow enhancements.
 * **`herdr/`** - Configuration for [herdr](https://herdr.dev/), a terminal workspace manager for AI coding agents.
-* **`karabiner/`** - macOS keyboard customization rules for [Karabiner-Elements](https://karabiner-elements.pqrs.org/).
+* **`karabiner/`** - macOS keyboard customization rules for [Karabiner-Elements](https://karabiner-elements.pqrs.org/), with `Internal-ISO` and `Logitech-ANSI` profiles.
 * **`nvim/`** - Complete Neovim setup built with `lazy.nvim` and structured for high performance and extensibility.
 * **`zsh/`** - Z shell configuration:
   * `.zshrc`: The main configuration file, broken down into logical sections.
-  * `zsh_aliases`: Grouped aliases for core commands, projects, and Dev/42 School tools.
-  * `zsh_functions`: Helpful shell functions (e.g., YouTube downloading, directory navigation).
+  * `zsh_aliases`: Grouped aliases for core commands and dev tools.
+  * `zsh_functions`: Shell functions (`toggle-kb`, `kb-sync`, `toggle_flotnote`, YouTube downloads).
 
-## 🚀 Installation / Setup
+Git configuration is intentionally **not** managed here — see [Notes](#-notes).
 
-To set up these dotfiles on a new macOS machine, clone this repository to `~/code/dotfiles` and create the necessary symlinks.
+## 🛠️ Prerequisites
 
-### 1. Clone the repository
+Install these before linking anything:
+
+```bash
+# Homebrew packages
+brew install neovim herdr ghostty zoxide lazygit yt-dlp
+brew install --cask karabiner-elements
+
+# Oh My Zsh (KEEP_ZSHRC so it doesn't clobber the symlink you make later)
+RUNZSH=no CHSH=no KEEP_ZSHRC=yes \
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Powerlevel10k theme + the two custom plugins the .zshrc declares
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k "$ZSH_CUSTOM/themes/powerlevel10k"
+git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+```
+
+`powerlevel10k` is a **theme**, not a plugin — it is set via `ZSH_THEME`, not in the `plugins` array. The remaining plugins (`git`, `gitfast`, `last-working-dir`, `common-aliases`, `history-substring-search`) ship with Oh My Zsh.
+
+## 🚀 Installation
+
+### 1. Clone
 
 ```bash
 mkdir -p ~/code
 git clone <your-repo-url> ~/code/dotfiles
-cd ~/code/dotfiles
 ```
 
-### 2. Create the Symlinks
+The paths in `.zshrc` and `zsh_aliases` assume `~/code/dotfiles`. Cloning elsewhere requires editing those files.
 
-You can manually link the files by running the following commands:
+### 2. Link
+
+> **These commands overwrite existing config.** `~/.config/nvim` and `~/.config/karabiner/karabiner.json` in particular are removed outright. Back them up first if you care about them.
 
 ```bash
 # Zsh
 ln -sf ~/code/dotfiles/zsh/.zshrc ~/.zshrc
 
-# Git
-ln -sf ~/code/dotfiles/git/gitconfig ~/.gitconfig
-ln -sf ~/code/dotfiles/git/gitignore ~/.gitignore
-
-# Config Directories (creates them if they don't exist)
 mkdir -p ~/.config/herdr ~/.config/karabiner ~/.config/ghostty
 
-# App Configs
-ln -sf ~/code/dotfiles/herdr/config.toml ~/.config/herdr/config.toml
-ln -sf ~/code/dotfiles/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
+# Neovim -- `ln -sfn` against an EXISTING directory silently creates the link
+# *inside* it. The target must be removed first.
+rm -rf ~/.config/nvim
+ln -s ~/code/dotfiles/nvim ~/.config/nvim
+
+# Karabiner -- quit the app first, it holds the file open
+osascript -e 'quit app "Karabiner-Elements"'
+rm -f ~/.config/karabiner/karabiner.json
+ln -s ~/code/dotfiles/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
+
+# Ghostty / herdr
 ln -sf ~/code/dotfiles/ghostty/config ~/.config/ghostty/config
+ln -sf ~/code/dotfiles/herdr/config.toml ~/.config/herdr/config.toml
 
-# Flotnote Toggle
+# Flotnote
 ln -sf ~/code/dotfiles/flotnote/flotnote-toggle.applescript ~/.flotnote-toggle.applescript
-ln -sf ~/code/dotfiles/flotnote/flotnote-toggle-guide.md ~/flotnote-toggle-guide.md
 osacompile -o ~/.flotnote-toggle.scpt ~/.flotnote-toggle.applescript
-
-# Neovim (Assuming the whole nvim folder is linked)
-ln -sfn ~/code/dotfiles/nvim ~/.config/nvim
 ```
 
-## 🛠️ Prerequisites & Dependencies
+### 3. Verify
 
-To get the full experience, ensure you have the following tools installed:
-
-* **[Homebrew](https://brew.sh/)** - The macOS package manager.
-* **[Oh My Zsh](https://ohmyz.sh/)** - Zsh framework.
-  * Required plugins: `zsh-autosuggestions`, `zsh-syntax-highlighting`, `powerlevel10k`.
-* **[Neovim](https://neovim.io/)** - Highly extensible Vim-based text editor.
-* **[Herdr](https://herdr.dev/)** - Terminal multiplexer & workspace manager.
-* **[Ghostty](https://ghostty.org/)** - Fast, native terminal emulator.
-* **[Karabiner-Elements](https://karabiner-elements.pqrs.org/)** - For advanced keyboard modifications on macOS.
-* **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** - Used by the custom YouTube downloader functions.
+```bash
+zsh -n ~/.zshrc          # syntax check before you trust it
+exec zsh                 # reload
+```
 
 ## 📝 Notes
 
-* **Terminal Auto-start**: `herdr` is configured to be launched manually by typing `herdr` rather than forcing an auto-start on every new terminal instance. This prevents hanging or nesting issues.
-* **Ghostty Path**: The Ghostty config is intentionally placed in `~/.config/ghostty/config` instead of the macOS `Library` path to remain XDG-compliant and cross-platform compatible.
+* **Git config is not managed here.** This repo is used across machines with different git identities (work vs. personal), so `~/.gitconfig` is left alone deliberately. Set identity per machine, or use `includeIf` to scope it by directory.
+
+* **Karabiner symlinks do not survive.** Karabiner-Elements rewrites `karabiner.json` via atomic replace on every settings change and profile switch, which **replaces the symlink with a regular file**. When that happens the repo silently stops tracking your config. Run `kb-sync` to pull the live file back into the repo and restore the link. Check with `ls -la ~/.config/karabiner/karabiner.json`.
+
+* **Keyboard profiles.** `toggle-kb` switches between the `Internal-ISO` (Apple) and `Logitech-ANSI` profiles. The function matches on those exact names — renaming a profile in the GUI breaks it.
+
+* **No multiplexer auto-start.** `herdr` is launched manually rather than from `.zshrc`. Auto-attaching a multiplexer at shell startup causes nesting and hangs.
+
+* **Ghostty path.** Config lives at `~/.config/ghostty/config` rather than the macOS `Library` path, to stay XDG-compliant.
+
+* **PATH hygiene.** Relative entries such as `./bin` and `./node_modules/.bin` are deliberately kept off `PATH` — they let any directory you `cd` into hijack the commands you run.
