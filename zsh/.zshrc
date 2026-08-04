@@ -4,7 +4,7 @@
 # Must stay near the top. Anything that may require console input
 # (password prompts, [y/n] confirmations) has to go above this block.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # ════════════════════════════════════════════════════════════════
@@ -14,24 +14,24 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=(
-  git
-  gitfast
-  last-working-dir
-  common-aliases
-  history-substring-search
-  zsh-autosuggestions
-  zsh-syntax-highlighting
+	git
+	gitfast
+	last-working-dir
+	common-aliases
+	history-substring-search
+	zsh-autosuggestions
+	zsh-syntax-highlighting
 )
 
 ZSH_DISABLE_COMPFIX=true
 
 if [[ -r "${ZSH}/oh-my-zsh.sh" ]]; then
-  source "${ZSH}/oh-my-zsh.sh"
-  # common-aliases ships aliases that get in the way; drop them if present.
-  unalias rm 2>/dev/null
-  unalias lt 2>/dev/null
+	source "${ZSH}/oh-my-zsh.sh"
+	# common-aliases ships aliases that get in the way; drop them if present.
+	unalias rm 2>/dev/null
+	unalias lt 2>/dev/null
 else
-  print -u2 "warning: oh-my-zsh not found at ${ZSH}; running without it"
+	print -u2 "warning: oh-my-zsh not found at ${ZSH}; running without it"
 fi
 
 # ════════════════════════════════════════════════════════════════
@@ -81,7 +81,7 @@ source "${HOME}/code/dotfiles/zsh/zsh_functions"
 # No auto-start: run `herdr` manually to attach the workspace manager.
 # Auto-attaching from .zshrc causes nesting and hangs.
 if command -v herdr >/dev/null; then
-  source <(herdr completion zsh) 2>/dev/null
+	source <(herdr completion zsh) 2>/dev/null
 fi
 
 # ════════════════════════════════════════════════════════════════
