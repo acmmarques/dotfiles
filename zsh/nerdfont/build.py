@@ -75,8 +75,8 @@ def main():
         if extra and prefix in matched:
             matched[prefix] += 1
 
-        # Name words come FIRST and in order, so fzf's --tiebreak=begin ranks
-        # a name hit (fa-save) above a mere synonym hit (fa-share -> 'save').
+        # Name words come FIRST and in order; they are the primary search
+        # text and are meant to be read before any synonym/keyword words.
         words = []
         seen = set()
         for w in bare.replace("_", "-").split("-"):

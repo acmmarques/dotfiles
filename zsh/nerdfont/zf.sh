@@ -17,7 +17,7 @@ command -v fzf >/dev/null 2>&1 || {
 }
 
 args=(
-    --exact --tiebreak=begin,length
+    --no-sort
     --delimiter=$'\t' --nth=2,3,4 --with-nth=1,3
     --prompt='glyph> ' --reverse --no-hscroll
     --bind "ctrl-f:execute-silent($SCRIPT_DIR/toggle.sh \"{}\")+reload($SCRIPT_DIR/list.sh)"

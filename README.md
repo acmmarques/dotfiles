@@ -11,6 +11,7 @@
   * `.zshrc`: The main configuration file, broken down into logical sections.
   * `zsh_aliases`: Grouped aliases for core commands and dev tools.
   * `zsh_functions`: Shell functions (`toggle-kb`, `kb-sync`, `toggle_flotnote`, YouTube downloads).
+  * `nerdfont/`: Nerd Font glyph picker used by herdr for naming tabs, workspaces, and panes. Pick a glyph, then optionally add a name; while typing the name, press the Down arrow to insert another glyph.
 
 Git configuration is intentionally **not** managed here — see [Notes](#-notes).
 

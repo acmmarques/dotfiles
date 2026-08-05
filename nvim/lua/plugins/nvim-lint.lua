@@ -14,7 +14,6 @@ return {
       sh = { "shellcheck" },
       bash = { "shellcheck" },
       zsh = { "shellcheck" },
-      ruby = { "rubocop" },
     }
 
     vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {

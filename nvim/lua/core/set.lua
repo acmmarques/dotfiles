@@ -30,15 +30,24 @@ vim.opt.listchars = {
 vim.api.nvim_set_hl(0, 'ColorColumn', { ctermbg = 'darkgrey', bg = '#3c3c3c' })
 
 --Setting the colorscheme
-vim.cmd.colorscheme("catppuccin")
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
-vim.api.nvim_set_hl(0, "TelescopeTitle", { bg = "none" })
-vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NeoTreeFloatBorder", { bg = "none" })
+vim.cmd.colorscheme("catppuccin-frappe")
+
+-- Use Catppuccin frappe base for the main editor
+vim.api.nvim_set_hl(0, "Normal", { bg = "#303446" })
+
+-- Use Catppuccin macchiato surface colors for floating windows so they stand out
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#24273a" })
+vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#24273a", fg = "#494d64" })
+vim.api.nvim_set_hl(0, "FloatTitle", { bg = "#24273a", fg = "#8aadf4" })
+vim.api.nvim_set_hl(0, "StatusLine", { bg = "#292c3c" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "#292c3c" })
+vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "#24273a" })
+vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "#24273a", fg = "#494d64" })
+vim.api.nvim_set_hl(0, "TelescopeTitle", { bg = "#24273a", fg = "#8aadf4" })
+vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "#24273a" })
+vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = "#24273a", fg = "#494d64" })
+vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#24273a" })
+vim.api.nvim_set_hl(0, "NeoTreeFloatBorder", { bg = "#24273a", fg = "#494d64" })
 
 --Setting clipboard
 vim.opt.clipboard = "unnamedplus"
