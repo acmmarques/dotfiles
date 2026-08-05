@@ -4,6 +4,7 @@
 alias n='nvim'
 alias lg='lazygit'
 alias oc='opencode'
+alias cpl='copilot'
 
 # zsh cannot alias a two-word command, so `alias git difftool=...`
 # never fires. Use an explicit alias instead.
