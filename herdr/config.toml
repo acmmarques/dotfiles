@@ -12,15 +12,6 @@ settings = "prefix+g"
 focus_agent = "prefix+ctrl+1..9"
 switch_workspace = "prefix+1..9"
 
-
-[[keys.command]]
-key = "prefix+t"
-type = "popup"
-command = "exec \"${SHELL:-sh}\""
-description = "open scratch terminal"
-width = "80%"
-height = "80%"
-
 # Create/rename now routes through the glyph wizard (see [[keys.command]]).
 # Unset the native actions so the wizard takes their key bindings.
 new_tab = ""
@@ -31,6 +22,14 @@ rename_pane = ""
 
 [ui]
 agent_panel_sort = "spaces"
+
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = "exec ${SHELL:-sh}"
+description = "open scratch terminal"
+width = "80%"
+height = "80%"
 
 [[keys.command]]
 key = "prefix+c"
