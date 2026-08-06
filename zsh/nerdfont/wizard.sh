@@ -29,19 +29,46 @@ die() {
 
 command -v "$HERDR_BIN" >/dev/null 2>&1 || die "herdr not found"
 
-sel="$("$SCRIPT_DIR/zf.sh")" || exit 0
-glyph="${sel%%$'\t'*}"
+# Pick loop: each Enter picks one icon and relaunches the picker with a
+# clean query (empty input); the running composition is shown as the
+# picker's header. Tab is the definitive accept; re-picking an
+# already-picked icon also accepts.
+glyphs=""
+first=""
+tail=""
+names=""
+while :; do
+    sel="$(ZF_HEADER="$glyphs" ZF_EXPECT_TAB=1 "$SCRIPT_DIR/zf.sh")" || exit 0
+    key="${sel%%$'\n'*}"
+    sel="${sel#*$'\n'}"
+    name="$(printf '%s\n' "$sel" | awk -F'\t' '{print $2}')"
+    [[ -n "$name" ]] || exit 0
+    if [[ "$key" == "tab" ]]; then
+        break
+    fi
+    if printf '%s' "$names" | grep -qwF "$name"; then
+        break
+    fi
+    glyph="$(printf '%s\n' "$sel" | awk -F'\t' '{print $1}')"
+    if [[ -z "$first" ]]; then
+        first="$glyph"
+    else
+        tail="${tail:+$tail }$glyph"
+    fi
+    glyphs="${glyphs:+$glyphs }$glyph"
+    names="$names $name"
+done
 
 # herdr's own fields can't be reached by send-text; clipboard is the bridge.
 if command -v pbcopy >/dev/null 2>&1; then
-    printf '%s' "$glyph" | pbcopy
+    printf '%s' "$glyphs" | pbcopy
 fi
 
 echo
-echo "glyph:  $glyph"
+echo "glyph:  $glyphs"
 read -r -p "name:   " rest || exit 0
 rest="$(printf '%s' "$rest" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-label="$glyph${rest:+  $rest}"
+label="${first}${rest:+  $rest}${tail:+ $tail}"
 
 case "$MODE" in
     create-tab)
