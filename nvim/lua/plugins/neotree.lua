@@ -15,6 +15,13 @@ return {
 			end,
 			desc = "Neo-tree",
 		},
+		{
+			"<leader>g ",
+			function()
+				require("neo-tree.command").execute({ toggle = true, source = "git_status" })
+			end,
+			desc = "Neo-tree git diff",
+		},
 	},
 	opts = {
 		-- All your previous options are preserved
