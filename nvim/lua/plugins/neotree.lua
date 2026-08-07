@@ -11,7 +11,7 @@ return {
 		{
 			"<leader>b",
 			function()
-				require("neo-tree.command").execute({ toggle = true, source = "filesystem" })
+				require("neo-tree.command").execute({ toggle = true, source = "last" })
 			end,
 			desc = "Neo-tree",
 		},
