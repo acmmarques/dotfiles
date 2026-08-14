@@ -21,7 +21,7 @@ Install these before linking anything:
 
 ```bash
 # Homebrew packages
-brew install neovim herdr ghostty zoxide lazygit yt-dlp
+brew install neovim herdr ghostty zoxide lazygit yt-dlp luarocks
 brew install --cask karabiner-elements
 
 # Oh My Zsh (KEEP_ZSHRC so it doesn't clobber the symlink you make later)
@@ -34,6 +34,10 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k "$ZSH_CUSTOM/themes
 git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
 git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
 ```
+
+Neovim's Mason setup also installs npm-based tools such as Prettier and
+`eslint_d`; Node.js and npm must be available on `PATH`. LuaCheck requires
+LuaRocks, installed above.
 
 `powerlevel10k` is a **theme**, not a plugin — it is set via `ZSH_THEME`, not in the `plugins` array. The remaining plugins (`git`, `gitfast`, `last-working-dir`, `common-aliases`, `history-substring-search`) ship with Oh My Zsh.
 
