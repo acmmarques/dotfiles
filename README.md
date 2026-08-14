@@ -21,7 +21,7 @@ Install these before linking anything:
 
 ```bash
 # Homebrew packages
-brew install neovim herdr ghostty zoxide lazygit yt-dlp
+brew install neovim herdr ghostty fzf zoxide lazygit yt-dlp
 brew install --cask karabiner-elements
 
 # Oh My Zsh (KEEP_ZSHRC so it doesn't clobber the symlink you make later)
