@@ -3,6 +3,7 @@
 # ════════════════════════════════════════════════════════════════
 alias n='nvim'
 alias lg='lazygit'
+alias gg='lazygit'
 alias oc='opencode'
 alias cpl='copilot'
 

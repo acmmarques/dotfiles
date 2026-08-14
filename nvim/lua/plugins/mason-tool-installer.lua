@@ -1,25 +1,10 @@
 return {
-  "WhoIsSethDaniel/mason-tool-installer.nvim",
-  dependencies = { "mason-org/mason.nvim" },
+  "williamboman/mason-lspconfig.nvim",
+  dependencies = {
+    "mason-org/mason.nvim",
+    "neovim/nvim-lspconfig",
+  },
   opts = {
-    ensure_installed = {
-      "lua-language-server",
-      "stylua",
-      "typescript-language-server",
-      "prettier",
-      "html-lsp",
-      "css-lsp",
-      "basedpyright",
-      "black",
-      "isort",
-      "ruff",
-      "bash-language-server",
-      "shellcheck",
-      "shfmt",
-    },
-    auto_update = false,
-    run_on_start = true,
-    start_delay = 3000,
-    debounce_hours = 24,
+    automatic_installation = true,
   },
 }
