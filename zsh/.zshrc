@@ -65,6 +65,8 @@ export PATH="${HOME}/.opencode/bin:${PATH}"
 # ════════════════════════════════════════════════════════════════
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
+command -v rbenv >/dev/null && eval "$(rbenv init - zsh)"
+
 # ════════════════════════════════════════════════════════════════
 # 6. ALIASES
 # ════════════════════════════════════════════════════════════════
