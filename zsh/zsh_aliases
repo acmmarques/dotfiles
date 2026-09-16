@@ -6,6 +6,7 @@ alias lg='lazygit'
 alias gg='lazygit'
 alias oc='opencode'
 alias cpl='copilot'
+alias pb='pbcopy'
 
 # zsh cannot alias a two-word command, so `alias git difftool=...`
 # never fires. Use an explicit alias instead.
