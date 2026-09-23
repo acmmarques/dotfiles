@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Notion Checkbox Sound",
+  "version": "1.0.0",
+  "description": "Plays a subtle sound when a Notion checkbox is checked.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://notion.so/*",
+    "https://www.notion.so/*",
+    "https://app.notion.com/*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_title": "Notion Checkbox Sound",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://notion.so/*",
+        "https://www.notion.so/*",
+        "https://app.notion.com/*"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "notification-sounds/*.wav"
+      ],
+      "matches": [
+        "https://notion.so/*",
+        "https://www.notion.so/*",
+        "https://app.notion.com/*"
+      ]
+    }
+  ]
+}

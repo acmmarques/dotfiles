@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Notion Checkbox Sound</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <label class="toggle-row" for="enabled">
+        <span>
+          <strong>Checkbox sound</strong>
+          <small id="status">Loading…</small>
+        </span>
+        <input id="enabled" type="checkbox">
+      </label>
+      <label class="volume-row" for="volume">
+        <span>Volume</span>
+        <output id="volume-value">35%</output>
+      </label>
+      <input id="volume" type="range" min="0" max="100" value="35" step="1">
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+:root {
+  color-scheme: light dark;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  min-width: 220px;
+  margin: 0;
+}
+
+main {
+  padding: 14px;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  cursor: pointer;
+}
+
+strong,
+small {
+  display: block;
+}
+
+small {
+  margin-top: 3px;
+  opacity: 0.65;
+}
+
+input {
+  width: 16px;
+  height: 16px;
+}
+
+.volume-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+#volume {
+  width: 100%;
+  margin: 8px 0 0;
+}
